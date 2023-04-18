@@ -11,8 +11,7 @@
   "config": {
     "optimize-autoloader": true,
     "preferred-install": "dist",
-    "sort-packages": true,
-    "prefer-lowest": true
+    "sort-packages": true
   },
   "autoload": {
     "psr-4": {
