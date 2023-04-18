@@ -27,6 +27,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require-dev": {
-    "guzzlehttp/guzzle": "^7.0"
+    "guzzlehttp/guzzle": "^7.0",
+    "phpstan/phpstan": "^1.10"
   }
 }
