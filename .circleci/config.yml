@@ -54,9 +54,10 @@ jobs:
           name: Configure proper working directory for pcov
           command: echo pcov.directory=/root/repo >> "$PHP_INI_DIR/conf.d/pcov.ini"
       - run:
-          name: run unit tests
+          name: run unit tests # we expect this test to fail since how this extension is working
           command: |
-            php vendor/bin/phpunit --configuration=phpunit.verification-extension.xml --coverage-clover coverage-clover/clover-unit.xml --log-junit ~/phpunit/unit-junit.xml --testdox
+            php vendor/bin/phpunit --configuration=phpunit.verification-extension.xml --coverage-clover coverage-clover/clover-unit.xml --log-junit ~/phpunit/unit-junit.xml --testdox |
+            [[ $? -eq 2 ]];
       - store_test_results:
           path: ~/phpunit
       - store_artifacts:
