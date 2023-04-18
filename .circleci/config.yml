@@ -48,7 +48,6 @@ jobs:
     steps:
       - checkout
       - restore_cache: {keys: ['v1-dependencies-{{ checksum "composer.lock" }}', v1-dependencies-]}
-      - docker/install-dockerize
       - run: composer install -n -a
       - save_cache: {paths: [vendor], key: 'v1-dependencies-{{ checksum "composer.lock" }}'}
       - run: # for some reason some repositories require this configuration
