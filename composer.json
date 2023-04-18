@@ -1,0 +1,32 @@
+{
+  "name": "cobiro/wiremock",
+  "type": "project",
+  "description": "Wiremock library for easier integration w PHPUnit.",
+  "license": "proprietary",
+  "require": {
+    "php": "^8.0",
+    "phpunit/phpunit": "^9.3",
+    "wiremock-php/wiremock-php": "^2.0"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "prefer-lowest": true
+  },
+  "autoload": {
+    "psr-4": {
+      "Cobiro\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require-dev": {
+    "guzzlehttp/guzzle": "^7.0"
+  }
+}

@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  php:
+    image: cobiro/php:8.0-develop
+    environment:
+      - XDEBUG_MODE=coverage,debug
+      - COMPOSER_AUTH
+      - COMPOSER_PROCESS_TIMEOUT=600
+      - COMPOSER_HOME=/var/composer
+    depends_on:
+      - wiremock
+    volumes:
+      - ./:/srv
+      - ~/.composer:/var/composer
+    working_dir: /srv
+    user: $DOCKER_UID:$DOCKER_UID
+
+  wiremock:
+    image: wiremock/wiremock:latest
+
+volumes:
+  data-volume:
