@@ -43,7 +43,7 @@ final class DummyClientExtendingTest extends WireMockTestCase
     {
         $expectedBody = ['someKey' => 'someValue'];
 
-        $this->mockTestRequest(json_encode($expectedBody));
+        $this->mockTestRequest((string) json_encode($expectedBody));
 
         $result = json_decode($this->client->get('/test')->getBody()->getContents(), true);
         self::assertEquals($expectedBody, $result);
@@ -53,7 +53,7 @@ final class DummyClientExtendingTest extends WireMockTestCase
     {
         $expectedBody = ['someKey' => 'otherValue'];
 
-        $this->mockTestRequest(json_encode($expectedBody));
+        $this->mockTestRequest((string) json_encode($expectedBody));
 
         $result = json_decode($this->client->get('/test')->getBody()->getContents(), true);
         self::assertEquals($expectedBody, $result);
@@ -62,8 +62,8 @@ final class DummyClientExtendingTest extends WireMockTestCase
     public function testItFailsAsExpected(): void
     {
         $this->mockTestPostRequest(
-            json_encode(['someKey' => 'someValue']),
-            json_encode(['data' => 'whatever'])
+            (string) json_encode(['someKey' => 'someValue']),
+            (string) json_encode(['data' => 'whatever'])
         );
 
         $this->client->post('/test');
@@ -74,8 +74,8 @@ final class DummyClientExtendingTest extends WireMockTestCase
     public function testItFailsAsExpectedSecondTime(): void
     {
         $this->mockTestPostRequest(
-            json_encode(['someKey' => 'someValue']),
-            json_encode(['data' => 'whatever'])
+            (string) json_encode(['someKey' => 'someValue']),
+            (string) json_encode(['data' => 'whatever'])
         );
 
         $this->client->post('/test');

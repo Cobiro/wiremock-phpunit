@@ -22,10 +22,10 @@ trait WireMockTrait
         array            $responseHeaders = [],
         array|string|null $responseBody = null,
         int               $responseStatusCode = 200,
-    ) {
+    ): void {
         $response = $this->wireResponse($responseStatusCode, $responseBody, $responseHeaders);
 
-        WireMockProxy::$wireMock->stubFor($this->wireRequest($method, $path)->willReturn($response));
+        WireMockProxy::instance()->stubFor($this->wireRequest($method, $path)->willReturn($response));
 
         // wire request
         WireMockProxy::$verifyCallbacks[] = function () use ($method, $path, $requestBody, $requestHeaders) {
@@ -44,8 +44,8 @@ trait WireMockTrait
             }
 
             try {
-                WireMockProxy::$wireMock->verify($requestPatternBuilder);
-            } catch (VerificationException $verificationException) {
+                WireMockProxy::instance()->verify($requestPatternBuilder);
+            } catch (VerificationException $verificationException) { // @phpstan-ignore-line
                 throw RequestVerificationException::verificationFailed(
                     $path,
                     $method,

@@ -27,7 +27,7 @@ final class WireMockProxy
 
         $wiremockHost = getenv(self::ENV_HOST);
         $wiremockPort = getenv(self::ENV_PORT);
-        $wiremockTimeout = getenv(self::ENV_TIMEOUT) ? getenv(self::ENV_TIMEOUT) : 3;
+        $wiremockTimeout = (int) (getenv(self::ENV_TIMEOUT) ? getenv(self::ENV_TIMEOUT) : 3);
 
         if (!$wiremockHost || !$wiremockPort) {
             throw StartException::missingEnv();
@@ -72,5 +72,14 @@ final class WireMockProxy
         if (WireMockProxy::$verifyCallbacks !== []) {
             WireMockProxy::$verifyCallbacks = [];
         }
+    }
+
+    public static function instance(): WireMock
+    {
+        if (self::$wireMock === null) {
+            throw new \RuntimeException('Missing wiremock instance');
+        }
+
+        return self::$wireMock;
     }
 }
