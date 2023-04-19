@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Cobiro\DevTools\Tests\Utils\WireMock;
+namespace WireMock\Phpunit\Extension;
 
 use PHPUnit\Runner\BeforeFirstTestHook;
 use PHPUnit\Runner\BeforeTestHook;
+use WireMock\Phpunit\WireMockProxy;
 
 final class WireMockExtension implements BeforeFirstTestHook, BeforeTestHook
 {
