@@ -54,7 +54,8 @@ jobs:
           name: Configure proper working directory for pcov
           command: echo pcov.directory=/root/repo >> "$PHP_INI_DIR/conf.d/pcov.ini"
       - run:
-          shell: /bin/bash +e pipefail
+          command: set +e pipefail
+      - run:
           name: run unit tests # we expect this test to fail with specific message
           command: |
             (php vendor/bin/phpunit --configuration=phpunit.verification-extension.xml --coverage-clover coverage-clover/clover-unit.xml --log-junit ~/phpunit/unit-junit.xml --testdox) | tee /dev/tty | grep -q "WireMock verification failed for test"
