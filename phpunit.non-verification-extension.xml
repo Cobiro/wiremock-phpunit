@@ -25,6 +25,6 @@
         <env name="WIREMOCK_PORT" value="8080"/>
     </php>
     <extensions>
-        <extension class="WireMock\Phpunit\WireMockExtension"/>
+        <extension class="WireMock\Phpunit\Extension\WireMockExtension"/>
     </extensions>
 </phpunit>

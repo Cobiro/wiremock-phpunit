@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace WireMock\Phpunit;
+namespace WireMock\Phpunit\Extension;
 
 use WireMock\Phpunit\Exception\VerifyException;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Runner\AfterTestHook;
 use PHPUnit\Runner\BeforeFirstTestHook;
 use PHPUnit\Runner\BeforeTestHook;
+use WireMock\Phpunit\WireMockProxy;
 
 final class WireMockVerificationExtension implements BeforeFirstTestHook, AfterTestHook, BeforeTestHook
 {

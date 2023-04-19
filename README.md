@@ -22,11 +22,11 @@ There are few ways to use this extension, each varies on level on how deeply you
 
 We suggest using this extension for most convenient usage:
 
-#### WireMock\Phpunit\WireMockExtension
+#### WireMock\Phpunit\Extension\WireMockExtension
 
 This extension doesn't provide verification after each test. To verify interactions your test case need to extend `WireMock\Phpunit\WireMockTestCase` or you need to use `WireMock\Phpunit\WireMockVerificationTrait`. Both solutions are triggering verification on teardown. Using this extension gives you nice response of failed tests. Also it doesn't stop on first failed verification.
 
-#### WireMock\Phpunit\WireMockVerificationExtension
+#### WireMock\Phpunit\Extension\WireMockVerificationExtension
 
 This extension triggers verification automatically after each test, but it comes with caveat that it fails after first failed interaction, so we are not recommending this way. But with this you don't need to extend our test case or add a new trait to existing test cases.
 
