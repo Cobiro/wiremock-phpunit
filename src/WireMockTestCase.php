@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cobiro\DevTools\Tests\Utils\WireMock;
+namespace WireMock\Phpunit;
 
 use PHPUnit\Framework\TestCase;
 

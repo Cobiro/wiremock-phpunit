@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Cobiro\DevTools\Tests\Utils\WireMock;
+namespace WireMock\Phpunit;
 
-use Cobiro\DevTools\Tests\Utils\WireMock\Exception\RequestVerificationException;
-use Cobiro\DevTools\Tests\Utils\WireMock\Exception\StartException;
-use Cobiro\DevTools\Tests\Utils\WireMock\Exception\VerifyException;
+use WireMock\Phpunit\Exception\RequestVerificationException;
+use WireMock\Phpunit\Exception\StartException;
+use WireMock\Phpunit\Exception\VerifyException;
 use WireMock\Client\WireMock;
 
 final class WireMockProxy

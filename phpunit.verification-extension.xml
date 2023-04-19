@@ -25,6 +25,6 @@
         <env name="WIREMOCK_PORT" value="8080"/>
     </php>
     <extensions>
-        <extension class="Cobiro\DevTools\Tests\Utils\WireMock\WireMockVerificationExtension"/>
+        <extension class="WireMock\Phpunit\WireMockVerificationExtension"/>
     </extensions>
 </phpunit>

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Trait;
 
-use Cobiro\DevTools\Tests\Utils\WireMock\WireMockTrait;
+use WireMock\Phpunit\WireMockTrait;
 
 trait RequestTrait
 {

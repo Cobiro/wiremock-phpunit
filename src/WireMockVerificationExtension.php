@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Cobiro\DevTools\Tests\Utils\WireMock;
+namespace WireMock\Phpunit;
 
-use Cobiro\DevTools\Tests\Utils\WireMock\Exception\VerifyException;
+use WireMock\Phpunit\Exception\VerifyException;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Runner\AfterTestHook;
 use PHPUnit\Runner\BeforeFirstTestHook;

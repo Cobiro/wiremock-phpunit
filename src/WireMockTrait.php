@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Cobiro\DevTools\Tests\Utils\WireMock;
+namespace WireMock\Phpunit;
 
-use Cobiro\DevTools\Tests\Utils\WireMock\Exception\RequestVerificationException;
+use WireMock\Phpunit\Exception\RequestVerificationException;
 use GuzzleHttp\Exception\ClientException;
 use WireMock\Client\MappingBuilder;
 use WireMock\Client\RequestPatternBuilder;

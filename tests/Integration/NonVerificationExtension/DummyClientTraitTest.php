@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Integration;
+namespace Tests\Integration\NonVerificationExtension;
 
-use Cobiro\DevTools\Tests\Utils\WireMock\WireMockVerificationTrait;
+use WireMock\Phpunit\WireMockVerificationTrait;
 use GuzzleHttp\Client;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\TestCase;

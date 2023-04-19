@@ -22,17 +22,17 @@ There are few ways to use this extension, each varies on level on how deeply you
 
 We suggest using this extension for most convenient usage:
 
-#### Cobiro\DevTools\Tests\Utils\WireMock\WireMockExtension
+#### WireMock\Phpunit\WireMockExtension
 
-This extension doesn't provide verification after each test. To verify interactions your test case need to extend `Cobiro\DevTools\Tests\Utils\WireMock\WireMockTestCase` or you need to use `Cobiro\DevTools\Tests\Utils\WireMock\WireMockVerificationTrait`. Both solutions are triggering verification on teardown. Using this extension gives you nice response of failed tests. Also it doesn't stop on first failed verification.
+This extension doesn't provide verification after each test. To verify interactions your test case need to extend `WireMock\Phpunit\WireMockTestCase` or you need to use `WireMock\Phpunit\WireMockVerificationTrait`. Both solutions are triggering verification on teardown. Using this extension gives you nice response of failed tests. Also it doesn't stop on first failed verification.
 
-#### Cobiro\DevTools\Tests\Utils\WireMock\WireMockVerificationExtension
+#### WireMock\Phpunit\WireMockVerificationExtension
 
 This extension triggers verification automatically after each test, but it comes with caveat that it fails after first failed interaction, so we are not recommending this way. But with this you don't need to extend our test case or add a new trait to existing test cases.
 
 #### Mocking requests
 
-To mock requests you need to use `Cobiro\DevTools\Tests\Utils\WireMock\WireMockTrait::wireMock()`. We recommend creating your own traits with your own methods. This is one of examples:
+To mock requests you need to use `WireMock\Phpunit\WireMockTrait::wireMock()`. We recommend creating your own traits with your own methods. This is one of examples:
 
 ```php
 trait RequestTrait
@@ -67,4 +67,4 @@ trait RequestTrait
 
 ### Configuration
 
-By default extension waits for 3 seconds for wiremock server. If you need more time you can change it by setting environment variable `WIREMOCK_TIMEOUT`
+By default, extension waits for 3 seconds for wiremock server. If you need more time you can change it by setting environment variable `WIREMOCK_TIMEOUT`

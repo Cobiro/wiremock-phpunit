@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Integration;
+namespace Tests\Integration\VerificationExtension;
 
 use GuzzleHttp\Client;
 use PHPUnit\Framework\AssertionFailedError;

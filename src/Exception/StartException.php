@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cobiro\DevTools\Tests\Utils\WireMock\Exception;
+namespace WireMock\Phpunit\Exception;
 
 final class StartException extends \RuntimeException
 {

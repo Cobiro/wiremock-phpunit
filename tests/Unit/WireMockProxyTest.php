@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\DevTools\Tests\Utils\WireMock;
+namespace Tests\Unit;
 
-use Cobiro\DevTools\Tests\Utils\WireMock\Exception\StartException;
-use Cobiro\DevTools\Tests\Utils\WireMock\Exception\VerifyException;
-use Cobiro\DevTools\Tests\Utils\WireMock\WireMockProxy;
+use WireMock\Phpunit\Exception\StartException;
+use WireMock\Phpunit\Exception\VerifyException;
+use WireMock\Phpunit\WireMockProxy;
 use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
 use Tests\Trait\RequestTrait;
