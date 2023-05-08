@@ -38,7 +38,7 @@ jobs:
           path: ~/phpunit
       - store_artifacts:
           path: ~/phpunit
-  test_integration_1:
+  test_integration:
     working_directory: ~/repo
     resource_class: small
     docker:
