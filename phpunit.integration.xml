@@ -17,14 +17,13 @@
     </coverage>
     <testsuites>
         <testsuite name="Integration">
-            <directory>./tests/Integration/NonVerificationExtension</directory>
+            <directory>./tests/Integration</directory>
         </testsuite>
     </testsuites>
-    <php>
-        <env name="WIREMOCK_HOST" value="wiremock"/>
-        <env name="WIREMOCK_PORT" value="8080"/>
-    </php>
     <extensions>
-        <extension class="WireMock\Phpunit\Extension\WireMockExtension"/>
+        <bootstrap class="WireMock\Phpunit\Extension\WireMockExtension">
+            <parameter name="host" value="wiremock"/>
+            <parameter name="port" value="8080"/>
+        </bootstrap>
     </extensions>
 </phpunit>

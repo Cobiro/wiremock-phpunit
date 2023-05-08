@@ -2,17 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Tests\Integration\NonVerificationExtension;
+namespace Tests\Integration;
 
-use WireMock\Phpunit\WireMockVerificationTrait;
 use GuzzleHttp\Client;
+use PHPUnit\Event\Code\Throwable;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\TestCase;
 use Tests\Trait\RequestTrait;
+use WireMock\Phpunit\Exception\VerifyException;
 
-final class DummyClientTraitTest extends TestCase
+final class DummyClientTest extends TestCase
 {
-    use RequestTrait, WireMockVerificationTrait;
+    use RequestTrait;
 
     private Client $client;
 

@@ -11,33 +11,28 @@ use WireMock\Client\WireMock;
 
 final class WireMockProxy
 {
-    private const ENV_HOST = 'WIREMOCK_HOST';
-    private const ENV_PORT = 'WIREMOCK_PORT';
-    private const ENV_TIMEOUT = 'WIREMOCK_TIMEOUT';
-
     /** @var array<callable> */
     public static array $verifyCallbacks = [];
     public static ?WireMock $wireMock = null;
 
-    public static function startWireMock(): void
-    {
+    public static function startWireMock(
+        string $host,
+        string $port,
+        int $timeout
+    ): void {
         if (self::$wireMock !== null) {
             return;
         }
 
-        $wiremockHost = getenv(self::ENV_HOST);
-        $wiremockPort = getenv(self::ENV_PORT);
-        $wiremockTimeout = (int) (getenv(self::ENV_TIMEOUT) ? getenv(self::ENV_TIMEOUT) : 3);
-
-        if (!$wiremockHost || !$wiremockPort) {
-            throw StartException::missingEnv();
+        if ($host === '' || !$port === '') {
+            throw StartException::missingParameters();
         }
 
-        self::$wireMock = WireMock::create($wiremockHost, $wiremockPort);
-        $serverStarted = self::$wireMock->isAlive($wiremockTimeout);
+        self::$wireMock = WireMock::create($host, $port);
+        $serverStarted = self::$wireMock->isAlive($timeout);
 
         if (!$serverStarted) {
-            throw StartException::timeout($wiremockTimeout);
+            throw StartException::timeout($timeout);
         }
     }
 
