@@ -4,8 +4,8 @@
   "description": "Wiremock library for easier integration w PHPUnit.",
   "license": "proprietary",
   "require": {
-    "php": "^8.0",
-    "phpunit/phpunit": "^9.3",
+    "php": "^8.1",
+    "phpunit/phpunit": "^10.0",
     "wiremock-php/wiremock-php": "^2.0"
   },
   "config": {

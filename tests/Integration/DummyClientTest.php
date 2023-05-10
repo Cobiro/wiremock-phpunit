@@ -2,17 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Tests\Integration\NonVerificationExtension;
+namespace Tests\Integration;
 
-use WireMock\Phpunit\WireMockVerificationTrait;
 use GuzzleHttp\Client;
-use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\TestCase;
 use Tests\Trait\RequestTrait;
 
-final class DummyClientTraitTest extends TestCase
+final class DummyClientTest extends TestCase
 {
-    use RequestTrait, WireMockVerificationTrait;
+    use RequestTrait;
 
     private Client $client;
 
@@ -23,21 +21,6 @@ final class DummyClientTraitTest extends TestCase
         $this->client = new Client([
             'base_uri' => 'http://wiremock:8080',
         ]);
-    }
-
-    protected function tearDown(): void
-    {
-        try {
-            parent::tearDown();
-        } catch (AssertionFailedError $exception) {
-            self::assertStringContainsString(
-                sprintf(
-                    'WireMock verification failed for test %s',
-                    self::class . ':' . $this->getName()
-                ),
-                $exception->getMessage()
-            );
-        }
     }
 
     public function testItVerifiesRequest(): void

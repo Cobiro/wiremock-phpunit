@@ -5,30 +5,28 @@ This library provides easy way to integrate [WireMock](https://wiremock.org) wit
 ### Requirements
 
 - Running wiremock service(in tests we use `wiremock/wiremock:latest`)
-- Set up `WIREMOCK_HOST` and `WIREMOCK_PORT` in env variables of `phpunit.xml`
-- PHP 8
-- PHPUnit 9.3 or higher
+- Set up `host` and `port` as parameters of extension(see below)
+- PHP 8.1
+- PHPUnit 10 or higher
 - wiremock-php 2.0 or higher
 
 ### Usage
 
-There are few ways to use this extension, each varies on level on how deeply you are open to modify your tests. First you need to add extension to your `phpunit.xml` configuration:
+To use extension add to your phpunit.xml configuration:
 
 ```xml
 <extensions>
-    <extension class="CLASS_NAME"/>
+    <bootstrap class="WireMock\Phpunit\Extension\WireMockExtension">
+        <parameter name="host" value="wiremock"/>
+        <parameter name="port" value="8080"/>
+    </bootstrap>
 </extensions>
 ```
 
-We suggest using this extension for most convenient usage:
-
-#### WireMock\Phpunit\Extension\WireMockExtension
-
-This extension doesn't provide verification after each test. To verify interactions your test case need to extend `WireMock\Phpunit\WireMockTestCase` or you need to use `WireMock\Phpunit\WireMockVerificationTrait`. Both solutions are triggering verification on teardown. Using this extension gives you nice response of failed tests. Also it doesn't stop on first failed verification.
-
-#### WireMock\Phpunit\Extension\WireMockVerificationExtension
-
-This extension triggers verification automatically after each test, but it comes with caveat that it fails after first failed interaction, so we are not recommending this way. But with this you don't need to extend our test case or add a new trait to existing test cases.
+It listens for those events and triggers specific actions:
+- `PHPUnit\Event\Test\PreparationStarted` - Resets wiremock interactions
+- `PHPUnit\Event\TestRunner\BootstrapFinished` - Starts wiremock instance
+- `PHPUnit\Event\Test\Finished` - Verifies interactions
 
 #### Mocking requests
 
@@ -67,4 +65,12 @@ trait RequestTrait
 
 ### Configuration
 
-By default, extension waits for 3 seconds for wiremock server. If you need more time you can change it by setting environment variable `WIREMOCK_TIMEOUT`
+By default, extension waits for 3 seconds for wiremock server. If you need more time you can change it by setting parameter `timeout` in phpunit configuration:
+
+```xml
+<extensions>
+    <bootstrap class="WireMock\Phpunit\Extension\WireMockExtension">
+        <parameter name="timeout" value="60"/>
+    </bootstrap>
+</extensions>
+```

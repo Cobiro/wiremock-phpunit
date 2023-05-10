@@ -11,9 +11,9 @@ final class StartException extends \RuntimeException
         parent::__construct($message);
     }
 
-    public static function missingEnv(): self
+    public static function missingParameters(): self
     {
-        return new self("Missing env variables, WIREMOCK_HOST and WIREMOCK_PORT must be set");
+        return new self("Missing extension parameters, `host` and `port` must be set");
     }
 
     public static function timeout(int $time): self

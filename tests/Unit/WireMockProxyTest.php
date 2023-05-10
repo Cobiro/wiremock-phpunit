@@ -23,10 +23,11 @@ final class WireMockProxyTest extends TestCase
 
     public function testItStartsWireMock(): void
     {
-        putenv('WIREMOCK_HOST=wiremock');
-        putenv('WIREMOCK_PORT=8080');
-
-        WireMockProxy::startWireMock();
+        WireMockProxy::startWireMock(
+            'wiremock',
+            '8080',
+            3
+        );
 
         $content = file_get_contents('http://wiremock:8080/__admin/');
 
@@ -35,30 +36,33 @@ final class WireMockProxyTest extends TestCase
 
     public function testItFailsToStartWhenWrongHost(): void
     {
-        putenv('WIREMOCK_HOST=whatever');
-        putenv('WIREMOCK_PORT=8080');
-
         $this->expectException(StartException::class);
 
-        WireMockProxy::startWireMock();
+        WireMockProxy::startWireMock(
+            'whatever',
+            '8080',
+            3
+        );
     }
 
     public function testItFailsOnMissingEnvHost(): void
     {
-        putenv('WIREMOCK_HOST');
-        putenv('WIREMOCK_PORT=8080');
-
         $this->expectException(StartException::class);
 
-        WireMockProxy::startWireMock();
+        WireMockProxy::startWireMock(
+            '',
+            '8080',
+            3
+        );
     }
 
     public function testItVerifiesInteraction(): void
     {
-        putenv('WIREMOCK_HOST=wiremock');
-        putenv('WIREMOCK_PORT=8080');
-
-        WireMockProxy::startWireMock();
+        WireMockProxy::startWireMock(
+            'wiremock',
+            '8080',
+            3
+        );
 
         $expectedBody = json_encode(['someKey' => 'someValue']);
 
@@ -83,7 +87,11 @@ final class WireMockProxyTest extends TestCase
         putenv('WIREMOCK_HOST=wiremock');
         putenv('WIREMOCK_PORT=8080');
 
-        WireMockProxy::startWireMock();
+        WireMockProxy::startWireMock(
+            'wiremock',
+            '8080',
+            3
+        );
 
         $expectedBody = json_encode(['someKey' => 'someValue']);
 

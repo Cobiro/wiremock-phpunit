@@ -4,19 +4,28 @@ declare(strict_types=1);
 
 namespace WireMock\Phpunit\Extension;
 
-use PHPUnit\Runner\BeforeFirstTestHook;
-use PHPUnit\Runner\BeforeTestHook;
-use WireMock\Phpunit\WireMockProxy;
+use PHPUnit\Runner\Extension\Extension;
+use PHPUnit\Runner\Extension\Facade;
+use PHPUnit\Runner\Extension\ParameterCollection;
+use PHPUnit\TextUI\Configuration\Configuration;
+use WireMock\Phpunit\Extension\Subscriber\Reset;
+use WireMock\Phpunit\Extension\Subscriber\StartWireMock;
+use WireMock\Phpunit\Extension\Subscriber\Verify;
 
-final class WireMockExtension implements BeforeFirstTestHook, BeforeTestHook
+final class WireMockExtension implements Extension
 {
-    public function executeBeforeFirstTest(): void
+    public function bootstrap(Configuration $configuration, Facade $facade, ParameterCollection $parameters): void
     {
-        WireMockProxy::startWireMock();
-    }
+        $timeout = (int) ($parameters->has('timeout') ? $parameters->get('timeout') : 3);
 
-    public function executeBeforeTest(string $test): void
-    {
-        WireMockProxy::reset();
+        $facade->registerSubscribers(
+            new StartWireMock(
+                $parameters->get('host'),
+                $parameters->get('port'),
+                $timeout
+            ),
+            new Verify(),
+            new Reset()
+        );
     }
 }
