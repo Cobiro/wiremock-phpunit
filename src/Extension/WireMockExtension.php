@@ -16,7 +16,7 @@ final class WireMockExtension implements Extension
 {
     public function bootstrap(Configuration $configuration, Facade $facade, ParameterCollection $parameters): void
     {
-        $timeout = (int) ($parameters->has('timeout') ? $parameters->get('timeout') :3);
+        $timeout = (int) ($parameters->has('timeout') ? $parameters->get('timeout') : 3);
 
         $facade->registerSubscribers(
             new StartWireMock(
