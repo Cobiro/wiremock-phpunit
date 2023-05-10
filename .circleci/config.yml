@@ -57,7 +57,9 @@ jobs:
           shell: /bin/bash
           name: run unit tests # we expect this test to fail with specific message
           command: |
-            [[ ((php vendor/bin/phpunit --configuration=phpunit.integration.xml --coverage-clover coverage-clover/clover-unit.xml --log-junit ~/phpunit/unit-junit.xml --testdox) | tee /dev/tty | grep -q "WireMock verification failed for test" | wc -l) == 2]]
+            result=$((php vendor/bin/phpunit --configuration=phpunit.integration.xml --coverage-clover coverage-clover/clover-unit.xml --log-junit ~/phpunit/unit-junit.xml --testdox) | tee /dev/tty ) |
+            lines=$(echo "$result" | grep "WireMock verification failed for test" | wc -l) |
+            [[$lines == 2]]
       - store_test_results:
           path: ~/phpunit
       - store_artifacts:
