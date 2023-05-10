@@ -59,7 +59,7 @@ jobs:
           command: |
             result=$((php vendor/bin/phpunit --configuration=phpunit.integration.xml --coverage-clover coverage-clover/clover-unit.xml --log-junit ~/phpunit/unit-junit.xml --testdox) | tee /dev/tty ) &&
             lines=$(echo "$result" | grep "WireMock verification failed for test" | wc -l) &&
-            ["$lines" = 2]
+            [ "$lines" = 2 ]
       - store_test_results:
           path: ~/phpunit
       - store_artifacts:
