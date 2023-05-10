@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace Tests\Integration;
 
 use GuzzleHttp\Client;
-use PHPUnit\Event\Code\Throwable;
-use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\TestCase;
 use Tests\Trait\RequestTrait;
-use WireMock\Phpunit\Exception\VerifyException;
 
 final class DummyClientTest extends TestCase
 {
