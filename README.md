@@ -65,4 +65,12 @@ trait RequestTrait
 
 ### Configuration
 
-By default, extension waits for 3 seconds for wiremock server. If you need more time you can change it by setting parameter `timeout` in phpunit configuration
+By default, extension waits for 3 seconds for wiremock server. If you need more time you can change it by setting parameter `timeout` in phpunit configuration:
+
+```xml
+<extensions>
+    <bootstrap class="WireMock\Phpunit\Extension\WireMockExtension">
+        <parameter name="timeout" value="60"/>
+    </bootstrap>
+</extensions>
+```
