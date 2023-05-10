@@ -26,21 +26,6 @@ final class DummyClientTest extends TestCase
         ]);
     }
 
-    protected function tearDown(): void
-    {
-        try {
-            parent::tearDown();
-        } catch (AssertionFailedError $exception) {
-            self::assertStringContainsString(
-                sprintf(
-                    'WireMock verification failed for test %s',
-                    self::class . ':' . $this->getName()
-                ),
-                $exception->getMessage()
-            );
-        }
-    }
-
     public function testItVerifiesRequest(): void
     {
         $expectedBody = ['someKey' => 'someValue'];

@@ -24,7 +24,7 @@ final class WireMockProxy
             return;
         }
 
-        if ($host === '' || !$port === '') {
+        if ($host === '' || $port === '') {
             throw StartException::missingParameters();
         }
 
