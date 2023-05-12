@@ -1,7 +1,7 @@
 {
   "name": "cobiro/wiremock",
   "type": "project",
-  "description": "Wiremock library for easier integration w PHPUnit.",
+  "description": "Wiremock library for easier integration with PHPUnit.",
   "license": "proprietary",
   "require": {
     "php": "^8.1",
