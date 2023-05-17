@@ -22,21 +22,34 @@ trait WireMockTrait
         array            $responseHeaders = [],
         array|string|null $responseBody = null,
         int               $responseStatusCode = 200,
+        ?string $requestContentType = null
     ): void {
         $response = $this->wireResponse($responseStatusCode, $responseBody, $responseHeaders);
 
         WireMockProxy::instance()->stubFor($this->wireRequest($method, $path)->willReturn($response));
 
         // wire request
-        WireMockProxy::$verifyCallbacks[] = function () use ($method, $path, $requestBody, $requestHeaders) {
+        WireMockProxy::$verifyCallbacks[] = function () use ($method, $path, $requestBody, $requestHeaders, $requestContentType) {
             $requestPatternBuilder = $this->wireMethodRequestedFor($method, $path);
 
-            if (is_array($requestBody)) {
-                $requestPatternBuilder->withRequestBody(WireMock::equalTo(json_encode($requestBody, JSON_THROW_ON_ERROR)));
+            $requestBodyPatternBuilder = $requestBody;
+
+            if (is_array($requestBodyPatternBuilder)) {
+                $requestBodyPatternBuilder = json_encode($requestBodyPatternBuilder, JSON_THROW_ON_ERROR);
+
+                if ($requestContentType === null) {
+                    $requestContentType = WireMockRequestBodyType::JSON;
+                }
             }
 
-            if (is_string($requestBody)) {
-                $requestPatternBuilder->withRequestBody(WireMock::equalTo($requestBody));
+            if ($requestBodyPatternBuilder !== null ) {
+                $equalTo = match ($requestContentType) {
+                    WireMockRequestBodyType::JSON => WireMock::equalToJson($requestBodyPatternBuilder),
+                    WireMockRequestBodyType::XML => WireMock::equalToXml($requestBodyPatternBuilder),
+                    default => WireMock::equalTo($requestBodyPatternBuilder),
+                };
+
+                $requestPatternBuilder->withRequestBody($equalTo);
             }
 
             foreach ($requestHeaders as $name => $value) {

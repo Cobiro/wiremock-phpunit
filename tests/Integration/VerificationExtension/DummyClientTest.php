@@ -49,6 +49,20 @@ final class DummyClientTest extends TestCase
         self::assertEquals($expectedBody, $result);
     }
 
+    public function testItVerifiesXmlRequest(): void
+    {
+        $expectedBody = 'OK';
+
+        $this->mockTestPostRequestWithXML($expectedBody, '<?xml version="1.0"?>
+<result><email>arjun76@mertz.info</email><name>Julien Runte</name><phone>1-985-265-5979</phone><description>Ipsum nulla sed autem enim id quaerat. Explicabo alias inventore qui autem tempora esse. Assumenda quam magni dolorem. Culpa labore in ratione modi aliquam velit asperiores.</description></result>
+');
+
+        $result = $this->client->post('/test', ['body' => '<?xml version="1.0"?>
+<result><phone>1-985-265-5979</phone><email>arjun76@mertz.info</email><name>Julien Runte</name><description>Ipsum nulla sed autem enim id quaerat. Explicabo alias inventore qui autem tempora esse. Assumenda quam magni dolorem. Culpa labore in ratione modi aliquam velit asperiores.</description></result>
+'])->getBody()->getContents();
+        self::assertEquals($expectedBody, $result);
+    }
+
     public function testItVerifiesOtherRequest(): void
     {
         $expectedBody = ['someKey' => 'otherValue'];

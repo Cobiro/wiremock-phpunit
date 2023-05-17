@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Trait;
 
+use WireMock\Phpunit\WireMockRequestBodyType;
 use WireMock\Phpunit\WireMockTrait;
 
 trait RequestTrait
@@ -31,6 +32,20 @@ trait RequestTrait
             $requestBody,
             [],
             $expectedBody
+        );
+    }
+
+    public function mockTestPostRequestWithXML(string $expectedBody, string $requestBody): void
+    {
+        $this->wireMock(
+            'POST',
+            '/test',
+            [],
+            $requestBody,
+            [],
+            $expectedBody,
+            200,
+            WireMockRequestBodyType::XML
         );
     }
 }
