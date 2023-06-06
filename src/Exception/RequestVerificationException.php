@@ -19,7 +19,10 @@ final class RequestVerificationException extends \Exception
         \Throwable $wireMockException
     ): self {
         return new self(
-            "Failed to verify interactions for path $url and method $method, for more check wiremock logs",
+            sprintf(
+                "Failed to verify interactions for path $url and method $method due to: %s. For more check wiremock logs.",
+                $wireMockException->getMessage() . PHP_EOL
+            ),
             $wireMockException
         );
     }
