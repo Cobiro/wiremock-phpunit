@@ -47,6 +47,10 @@ final class WireMockProxy
             return;
         }
 
+        if (WireMockProxy::$verifyCallbacks !== []) {
+            return;
+        }
+
         self::$wireMock->reset();
         WireMockProxy::$verifyCallbacks = [];
     }
@@ -67,10 +71,6 @@ final class WireMockProxy
             WireMockProxy::$verifyCallbacks = [];
 
             throw new VerifyException($test, ...$thrownExceptions);
-        }
-
-        if (WireMockProxy::$verifyCallbacks !== []) {
-            WireMockProxy::$verifyCallbacks = [];
         }
     }
 
