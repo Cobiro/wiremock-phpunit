@@ -42,7 +42,7 @@ final class WireMockProxy
             return;
         }
 
-        if (WireMockProxy::$verifyCallbacks !== []) {
+        if (WireMockProxy::$verifyCallbacks === []) {
             return;
         }
 
