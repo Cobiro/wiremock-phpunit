@@ -73,6 +73,43 @@ final class DummyClientTest extends TestCase
         self::assertEquals($expectedBody, $result);
     }
 
+    public function testItVerifiesTwoRequestsWithDifferentBodies(): void
+    {
+        $expectedBody1 = ['someKey' => 'someValue1'];
+        $expectedBody2 = ['someKey' => 'someValue2'];
+
+        $this->mockTestPostRequest(
+            (string) json_encode($expectedBody1),
+            (string) json_encode(['test' => 123]),
+            true
+        );
+        $this->mockTestPostRequest(
+            (string) json_encode($expectedBody2),
+            (string) json_encode(['test' => 456]),
+            true
+        );
+
+        $result = json_decode($this->client->post(
+            '/test',
+            [
+                'json' => [
+                    'test' => 123,
+                ]
+            ]
+        )->getBody()->getContents(), true);
+        self::assertEquals($expectedBody1, $result);
+
+        $result = json_decode($this->client->post(
+            '/test',
+            [
+                'json' => [
+                    'test' => 456,
+                ]
+            ]
+        )->getBody()->getContents(), true);
+        self::assertEquals($expectedBody2, $result);
+    }
+
     public function testItFailsAsExpected(): void
     {
         $this->mockTestPostRequest(
