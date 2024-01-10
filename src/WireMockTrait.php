@@ -39,7 +39,7 @@ trait WireMockTrait
         WireMockProxy::instance()->stubFor($request->willReturn($response));
 
         // wire request
-        WireMockProxy::$verifyCallbacks[] = function () use ($method, $path, $requestBody, $requestHeaders, $requestContentType, $requestBodyMatchingStrategy) {
+        WireMockProxy::$verifyCallbacks[] = function () use ($method, $path, $requestHeaders, $requestBodyMatchingStrategy) {
             $requestPatternBuilder = $this->wireMethodRequestedFor($method, $path);
 
             if ($requestBodyMatchingStrategy !== null) {
