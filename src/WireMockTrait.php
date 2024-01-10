@@ -30,20 +30,20 @@ trait WireMockTrait
 
         $request = $this->wireRequest($method, $path);
 
-        if ($stubRequestBody) {
-            $request->withRequestBody($this->requestBodyMatchingStrategy($requestBody, $requestContentType));
+        $requestBodyMatchingStrategy = $this->requestBodyMatchingStrategy($requestBody, $requestContentType);
+
+        if ($requestBodyMatchingStrategy !== null && $stubRequestBody) {
+            $request->withRequestBody($requestBodyMatchingStrategy);
         }
 
         WireMockProxy::instance()->stubFor($request->willReturn($response));
 
         // wire request
-        WireMockProxy::$verifyCallbacks[] = function () use ($method, $path, $requestBody, $requestHeaders, $requestContentType) {
+        WireMockProxy::$verifyCallbacks[] = function () use ($method, $path, $requestBody, $requestHeaders, $requestContentType, $requestBodyMatchingStrategy) {
             $requestPatternBuilder = $this->wireMethodRequestedFor($method, $path);
 
-            if ($requestBody !== null) {
-                $requestPatternBuilder->withRequestBody(
-                    $this->requestBodyMatchingStrategy($requestBody, $requestContentType)
-                );
+            if ($requestBodyMatchingStrategy !== null) {
+                $requestPatternBuilder->withRequestBody($requestBodyMatchingStrategy);
             }
 
             foreach ($requestHeaders as $name => $value) {
