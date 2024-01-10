@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WireMock\Phpunit;
 
+use WireMock\Client\ValueMatchingStrategy;
 use WireMock\Phpunit\Exception\RequestVerificationException;
 use GuzzleHttp\Exception\ClientException;
 use WireMock\Client\MappingBuilder;
@@ -22,34 +23,27 @@ trait WireMockTrait
         array            $responseHeaders = [],
         array|string|null $responseBody = null,
         int               $responseStatusCode = 200,
-        ?string $requestContentType = null
+        ?string $requestContentType = null,
+        bool $stubRequestBody = false
     ): void {
         $response = $this->wireResponse($responseStatusCode, $responseBody, $responseHeaders);
 
-        WireMockProxy::instance()->stubFor($this->wireRequest($method, $path)->willReturn($response));
+        $request = $this->wireRequest($method, $path);
+
+        if ($stubRequestBody) {
+            $request->withRequestBody($this->requestBodyMatchingStrategy($requestBody, $requestContentType));
+        }
+
+        WireMockProxy::instance()->stubFor($request->willReturn($response));
 
         // wire request
         WireMockProxy::$verifyCallbacks[] = function () use ($method, $path, $requestBody, $requestHeaders, $requestContentType) {
             $requestPatternBuilder = $this->wireMethodRequestedFor($method, $path);
 
-            $requestBodyPatternBuilder = $requestBody;
-
-            if (is_array($requestBodyPatternBuilder)) {
-                $requestBodyPatternBuilder = json_encode($requestBodyPatternBuilder, JSON_THROW_ON_ERROR);
-
-                if ($requestContentType === null) {
-                    $requestContentType = WireMockRequestBodyType::JSON;
-                }
-            }
-
-            if ($requestBodyPatternBuilder !== null ) {
-                $equalTo = match ($requestContentType) {
-                    WireMockRequestBodyType::JSON => WireMock::equalToJson($requestBodyPatternBuilder),
-                    WireMockRequestBodyType::XML => WireMock::equalToXml($requestBodyPatternBuilder),
-                    default => WireMock::equalTo($requestBodyPatternBuilder),
-                };
-
-                $requestPatternBuilder->withRequestBody($equalTo);
+            if ($requestBody !== null) {
+                $requestPatternBuilder->withRequestBody(
+                    $this->requestBodyMatchingStrategy($requestBody, $requestContentType)
+                );
             }
 
             foreach ($requestHeaders as $name => $value) {
@@ -104,5 +98,30 @@ trait WireMockTrait
         }
         
         return $response;
+    }
+
+    private function requestBodyMatchingStrategy(
+        array|string|null $requestBody,
+        ?string $requestContentType
+    ): ?ValueMatchingStrategy {
+        if (is_array($requestBody)) {
+            $requestBody = json_encode($requestBody, JSON_THROW_ON_ERROR);
+
+            if ($requestContentType === null) {
+                $requestContentType = WireMockRequestBodyType::JSON;
+            }
+        }
+
+        if ($requestBody !== null ) {
+            $equalTo = match ($requestContentType) {
+                WireMockRequestBodyType::JSON => WireMock::equalToJson($requestBody),
+                WireMockRequestBodyType::XML => WireMock::equalToXml($requestBody),
+                default => WireMock::equalTo($requestBody),
+            };
+
+            return $equalTo;
+        }
+
+        return null;
     }
 }

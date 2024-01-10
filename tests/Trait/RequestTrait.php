@@ -23,7 +23,7 @@ trait RequestTrait
         );
     }
 
-    public function mockTestPostRequest(string $expectedBody, string $requestBody): void
+    public function mockTestPostRequest(string $expectedBody, string $requestBody, bool $stubRequestBody = false): void
     {
         $this->wireMock(
             'POST',
@@ -31,7 +31,10 @@ trait RequestTrait
             [],
             $requestBody,
             [],
-            $expectedBody
+            $expectedBody,
+            200,
+            null,
+            $stubRequestBody
         );
     }
 
